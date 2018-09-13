@@ -14,7 +14,7 @@ mongoose.connect("mongodb://localhost:27017/TravelerDB",
 
 
 //Create MongoDB Model:
-module.export = {
+module.exports = {
     User: mongoose.model("User", user.userModel),
     Country: mongoose.model("Country", country.countryModel)
 };

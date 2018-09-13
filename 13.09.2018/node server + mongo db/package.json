@@ -1,6 +1,13 @@
 {
   "name": "project",
   "version": "",
+  "scripts": {
+    "start": "node controllers/index.js",
+    "test":"echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node":"8.12.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
