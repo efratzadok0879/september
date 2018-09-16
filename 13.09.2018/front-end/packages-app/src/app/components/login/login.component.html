@@ -7,12 +7,12 @@
   </div>
   <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
     <div class="group">
-      <input formControlName="userName" id="userName" class="inputMaterial" (keyup)="isExistUser = true">
+      <input formControlName="name" id="name" class="inputMaterial" (keyup)="isExistUser = true">
       <span class="highlight"></span>
       <span class="bar"></span>
-      <label for="username" [ngClass]="{'label':true,'full':userName.value!=''}">User Name</label>
-      <div *ngIf="userName.errors&& userName.touched">
-        <p *ngFor="let err of objectHolder.values(userName.errors)" class="myAlert">{{err}}</p>
+      <label for="name" [ngClass]="{'label':true,'full':name.value!=''}">User Name</label>
+      <div *ngIf="name.errors&& name.touched">
+        <p *ngFor="let err of objectHolder.values(name.errors)" class="myAlert">{{err}}</p>
       </div>
     </div>
     <div class="group">

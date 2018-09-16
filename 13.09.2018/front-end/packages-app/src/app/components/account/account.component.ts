@@ -16,7 +16,7 @@ export class AccountComponent implements OnInit {
   //----------------METHODS-------------------
 
   ngOnInit() {
-    this.router.navigate(['/bookStore/myAccount/login']);
+    this.router.navigate(['/project/myAccount/login']);
   }
 
 

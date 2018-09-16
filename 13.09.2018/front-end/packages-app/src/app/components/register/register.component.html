@@ -8,35 +8,29 @@
     <div class="scrollbar" id="style-2">
         <div id="form" class="force-overflow">
             <form [formGroup]="registerFormGroup" (ngSubmit)="onSubmit()">
+
                 <div class="group">
-                    <input formControlName="firstName" id="firstName" class="inputMaterial">
+                    <input formControlName="id" id="id" class="inputMaterial">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label for="firstName" [ngClass]="{'label':true,'full':firstName.value!=''}">First Name</label>
-                    <div *ngIf="firstName.errors&& firstName.touched">
-                        <p *ngFor="let err of objectHolder.values(firstName.errors)" class="myAlert">{{err}}</p>
+                    <label for="id" [ngClass]="{'label':true,'full':id.value!=''}">Id</label>
+                    <div *ngIf="id.errors&&id.touched">
+                        <p *ngFor="let err of objectHolder.values(id.errors)" class="myAlert">{{err}}</p>
                     </div>
                 </div>
-               <div class="group">
-                    <input formControlName="lastName" id="lastName" class="inputMaterial">
+
+                <div class="group">
+                    <input formControlName="name" id="name" class="inputMaterial" (keyup)="isExistUserName=false">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label for="lastName" [ngClass]="{'label':true,'full':lastName.value!=''}">Last Name</label>
-                    <div *ngIf="lastName.errors&& lastName.touched">
-                        <p *ngFor="let err of objectHolder.values(lastName.errors)" class="myAlert">{{err}}</p>
-                    </div>
-               </div>
-               <div class="group">
-                    <input formControlName="userName" id="userName" class="inputMaterial" (keyup)="isExistUserName=false">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label for="userName"[ngClass]="{'label':true,'full':userName.value!=''}">User Name</label>
-                    <div *ngIf="userName.errors&&userName.touched">
-                        <p *ngFor="let err of objectHolder.values(userName.errors)" class="myAlert">{{err}}</p>
+                    <label for="name" [ngClass]="{'label':true,'full':name.value!=''}">Name</label>
+                    <div *ngIf="name.errors&&name.touched">
+                        <p *ngFor="let err of objectHolder.values(name.errors)" class="myAlert">{{err}}</p>
                     </div>
                     <p *ngIf="isExistUserName" class="myAlert">user name already exsits</p>
-               </div>
-               <div class="group">
+                </div>
+
+                <div class="group">
                     <input formControlName="password" id="password" class="inputMaterial" type="password" (keyup)="isExistPassword=false">
                     <span class="highlight"></span>
                     <span class="bar"></span>
@@ -46,11 +40,24 @@
                     </div>
                     <p *ngIf="isExistPassword" class="myAlert">password already exsits</p>
                 </div>
-                <app-upload-image (eventImage)="getImage($event)"></app-upload-image>
+
+                <div class="group">
+                    <input formControlName="age" id="password" class="inputMaterial" type="number">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label for="age" [ngClass]="{'label':true,'full':age.value!=''}">Age</label>
+                    <div *ngIf="age.errors&&age.touched">
+                        <p *ngFor="let err of objectHolder.values(age.errors)" class="myAlert">{{err}}</p>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <input formControlName="isMale" id="isMale" class="inputMaterial" type="checkbox">
+                </div>
 
                 <button type="submit" class="button col-md-offset-2 col-md-8" [disabled]="registerFormGroup.invalid||isExistUserName || isExistPassword">Register</button>
             </form>
         </div>
     </div>
-    
+
 </div>

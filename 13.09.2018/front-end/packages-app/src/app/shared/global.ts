@@ -1,8 +1,7 @@
 
 export const Global =
 {
-    Host:"http://localhost:3500",
-    Uploads:"http://localhost:3500/uploads",
-    CurrentUser: "currentUser",
-    ShoppingList:"shoppingList"
+    Host:'http://localhost:3000',
+    CurrentUser: 'currentUser',
+    Token:'token'
 };

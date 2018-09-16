@@ -9,8 +9,8 @@ import{
   AccountMenuComponent,
   LoginComponent,
   RegisterComponent,
-  UploadImageComponent,
   AuthenticationService,
+  routing
 
 } from './imports';
 
@@ -21,12 +21,12 @@ import{
     AccountMenuComponent,
     LoginComponent,
     RegisterComponent,
-    UploadImageComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    routing
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

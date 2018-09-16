@@ -24,7 +24,7 @@ export class AccountMenuComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/bookStore/home']);
+    this.router.navigate(['/project/myAccount/login']);
 
   }
 

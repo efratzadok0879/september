@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User, AuthenticationService, Global, createValidatorArr } from '../../imports';
+import { User, AuthenticationService, Global, createValidatorArr, ValidateId } from '../../imports';
 
 @Component({
   selector: 'app-register',
@@ -24,10 +24,11 @@ export class RegisterComponent {
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.registerFormGroup = this.formBuilder.group({
-      firstName: ['', createValidatorArr("firstName", 2, 15, /^[A-Za-z]+$/)],
-      lastName: ['', createValidatorArr("lastName", 2, 15, /^[A-Za-z]+$/)],
-      userName: ['', createValidatorArr("userName", 3, 15, /^[A-Za-z]+$/)],
+      id: ['', createValidatorArr("id", 9, 9).concat(ValidateId)],
+      name: ['', createValidatorArr("name", 2, 15, /^[A-Za-z]+$/)],
       password: ['', createValidatorArr("password", 5, 10)],
+      age: ['', createValidatorArr("age", 1, 120)],
+      isMale: ['', createValidatorArr("isMale")],
     });
   }
 
@@ -35,12 +36,7 @@ export class RegisterComponent {
 
   onSubmit() {
     let user: User = this.registerFormGroup.value;
-    //upload profile image in the server
-    this.authenticationService.upload(this.imageFile).subscribe(res => {
-      //placement image name to the user object
-      user.profileImageUrl = res.newFilename;
-      this.register(user);
-    });
+    this.register(user);
   }
 
   register(user: User) {
@@ -48,47 +44,36 @@ export class RegisterComponent {
     this.isExistPassword = false;
     this.authenticationService.register(user).subscribe(
       res => {
-        let userId: number = res.userId;
-        switch (userId) {
-          case -1:
-            this.isExistUserName = true;
-            break;
-          case -2:
-            this.isExistPassword = true;
-            break;
-          default:
-            user.id = userId;
-            //enter current user into localStorage
-            localStorage.setItem(Global.CurrentUser, JSON.stringify(user));
-            this.router.navigate(['bookStore/products']);
-            break;
-        }
+        //enter current user into localStorage
+        localStorage.setItem(Global.CurrentUser, `${user.name}`);
+        let token: string = res.token;
+        localStorage.setItem(Global.Token, JSON.stringify(token));
+        alert("register succeeded");
+
       },
       err => console.log(err));
-  }
-  /**
-   * @method
-   * get image from event emitter of 'upload-image' component 
-   * when user choose his profile image
-   */
-  getImage(value: any) {
-    this.imageFile = value;
   }
 
   //----------------GETTERS-------------------
 
   //getters of the form group controls
 
-  get firstName() {
-    return this.registerFormGroup.controls["firstName"];
+  get id() {
+    return this.registerFormGroup.controls["id"];
   }
-  get lastName() {
-    return this.registerFormGroup.controls["lastName"];
+  get name() {
+    return this.registerFormGroup.controls["name"];
   }
-  get userName() {
-    return this.registerFormGroup.controls["userName"];
-  }
+
   get password() {
     return this.registerFormGroup.controls["password"];
+  }
+
+  get age() {
+    return this.registerFormGroup.controls["age"];
+  }
+
+  get isMale() {
+    return this.registerFormGroup.controls["isMale"];
   }
 }

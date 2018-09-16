@@ -22,7 +22,7 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
     this.loginFormGroup = this.formBuilder.group({
-      userName: ['', createValidatorArr("userName", 3, 15, /^[A-Za-z]+$/)],
+      name: ['', createValidatorArr("name", 3, 15, /^[A-Za-z]+$/)],
       password: ['', createValidatorArr("password", 5, 10)],
 
     });
@@ -35,23 +35,24 @@ export class LoginComponent {
   }
 
   login() {
-    this.authenticationService.login(this.userName.value, this.password.value)
-      .subscribe(user => {
-        if (user != null) {
-          localStorage.setItem(Global.CurrentUser, JSON.stringify(user));
-          this.router.navigate(['bookStore/products']);
-        }
-        else
-          this.isExistUser = false;
-      });
+    this.authenticationService.login(this.name.value, this.password.value)
+      .subscribe(respones => {
+        localStorage.setItem(Global.Token,respones.token)
+        localStorage.setItem(Global.CurrentUser, this.name.value);
+          alert("login succseeded!")
+      },
+    err=>{
+      console.log(err);
+      this.isExistUser = false;
+    });
   }
 
   //----------------GETTERS-------------------
 
   //getters of the form group controls
 
-  get userName() {
-    return this.loginFormGroup.controls["userName"];
+  get name() {
+    return this.loginFormGroup.controls["name"];
   }
   get password() {
     return this.loginFormGroup.controls["password"];

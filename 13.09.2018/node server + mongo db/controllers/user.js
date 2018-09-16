@@ -1,6 +1,7 @@
 const models = require('../models/index');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/index').User;
+const authenticate=require('./authenticate');
 function addUserRoutes(app) {
 
     app.get('/users', function (request, respones) {
@@ -9,16 +10,20 @@ function addUserRoutes(app) {
         });
     });
 
-    app.post('/register', function (request, respones) {
+    app.post('/register',authenticate, function (request, respones) {
         let user = new User(request.body);
         console.log(user);
         user.save((err, res) => {
             console.log(err || "Insert user succsess");
             if (!err) {
                 //create token
-                let token = jwt.sign(user, 'my secret');
+                let data={
+                    name:user.name,
+                    password:user.password
+                }
+                let token = jwt.sign(data, 'my secret');
                 console.log(token);
-                res.send(token);
+                respones.send({token});
             }
         });
 
@@ -32,7 +37,7 @@ function addUserRoutes(app) {
                 //create token
                 let token = jwt.sign(request.body, 'my secret');
                 console.log(token);
-                respones.send(token);
+                respones.send({token});
             }
 
         });
